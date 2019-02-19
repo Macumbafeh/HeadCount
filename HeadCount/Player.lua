@@ -313,7 +313,6 @@ function HeadCount.Player.prototype:setClassName(className)
 end
 
 -- Gets the standard class name.
--- Death Knight
 -- Druid
 -- Hunter
 -- Mage
