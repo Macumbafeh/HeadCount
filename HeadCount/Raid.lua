@@ -18,7 +18,6 @@ HeadCount.Raid.prototype.playerList = nil
 HeadCount.Raid.prototype.bossList = nil
 HeadCount.Raid.prototype.lootList = nil
 HeadCount.Raid.prototype.timeList = nil
-HeadCount.Raid.prototype.difficulty = nil
 HeadCount.Raid.prototype.raidTime = nil
 HeadCount.Raid.prototype.lastActivityTime = nil
 HeadCount.Raid.prototype.zone = nil
@@ -35,7 +34,6 @@ function HeadCount.Raid.prototype:init(args)
 	self.bossList = args["bossList"]
 	self.lootList = args["lootList"]
 	self.timeList = args["timeList"]
-	self.difficulty = args["difficulty"]
 	self.raidTime = args["raidTime"]
 	self.lastActivityTime = args["lastActivityTime"]
 	self.zone = args["zone"]
@@ -223,7 +221,6 @@ end
 -- @return table Returns a player list table.
 function HeadCount.Raid.prototype:retrievePlayerListByClass()
 	local playerListByClass = {
-		["Death Knight"] = {}, 
 		["Druid"] = {},  
 		["Hunter"] = {},  
 		["Mage"] = {},  
@@ -241,9 +238,7 @@ function HeadCount.Raid.prototype:retrievePlayerListByClass()
 			local playerName = j:getName() 
 			local fileName = j:getFileName()
 
-			if (L["class.deathknight"] == fileName) then 
-				table.insert(playerListByClass["Death Knight"], playerName)
-			elseif (L["class.druid"] == fileName) then
+			if (L["class.druid"] == fileName) then
 				table.insert(playerListByClass["Druid"], playerName)
 			elseif (L["class.hunter"] == fileName) then
 				table.insert(playerListByClass["Hunter"], playerName)
@@ -714,18 +709,6 @@ end
 -- @param lootList The loot list
 function HeadCount.Raid.prototype:setLootList(lootList)
 	self.lootList = lootList
-end
-
--- Gets the difficulty
--- @return number Returns the raid difficulty
-function HeadCount.Raid.prototype:getDifficulty()
-	return self.difficulty
-end
-
--- Sets the difficulty
--- @param difficulty The difficulty
-function HeadCount.Raid.prototype:setDifficulty(difficulty)
-	self.difficulty = difficulty
 end
 
 -- Gets the time list.
