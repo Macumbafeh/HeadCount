@@ -391,14 +391,6 @@ local options = {
 					desc = L["console.command.export.eqdkp.description"], 
 					order = 2, 
 					args = {
-						["difficulty"] = {
-							type = "toggle", 
-							name = L["console.command.export.eqdkp.difficulty.name"], 
-							desc = L["console.command.export.eqdkp.difficulty.description"], 
-							get = "IsEQDKPDifficultyEnabled", 
-							set = "ToggleEQDKPDifficulty", 
-							order = 1, 
-						}, 
 					}, 
 				}, 
 			}, 
@@ -539,12 +531,6 @@ local defaultOptions = {
 	exportFormat = exportFormats["EQdkp"], 
 	
 	-- export
-	export = { 
-		["eqdkp"] = {
-			["difficulty"] = false, 
-		}, 
-	}, 
-	
 	isDebugEnabled = false, 
 	raidListWrapper = nil, 
 	exclusionList = { 
@@ -560,19 +546,6 @@ local defaultOptions = {
 		[30318] = true, -- Netherstrand Longbow
 		[30319] = true, -- Nether Spike
 		[30320] = true, -- Bundle of Nether Spikes
-		[34057] = true, -- Abyss Crystal
-		[36919] = true, -- Cardinal Ruby
-		[36922] = true, -- King's Amber
-		[36925] = true, -- Majestic Zircon
-		[36928] = true, -- Dreadstone
-		[36931] = true, -- Ametrine
-		[36934] = true, -- Eye of Zul
-		[40752] = true, -- Emblem of Heroism
-		[40753] = true, -- Emblem of Valor
-		[45624] = true, -- Emblem of Conquest
-		[47241] = true, -- Emblem of Triumph
-		[49426] = true, -- Emblem of Frost
-		[49110] = true, -- Nightmare Tear
 	}, 
 }
 
@@ -947,7 +920,6 @@ function HeadCount:AddBoss(args)
 			local utcDateTimeInSeconds = HeadCount:getUTCDateTimeInSeconds()
 			local activityTime = AceLibrary("HeadCountTime-1.0"):new({ ["utcDateTimeInSeconds"] = utcDateTimeInSeconds })
 			local realZoneText = GetRealZoneText()
-			local difficulty = HeadCount:determineDifficulty()
 			-- local encounterName = HeadCount:retrieveBossEncounterName(lootSource)
 			local encounterName = convertedBossName
 		
@@ -959,7 +931,6 @@ function HeadCount:AddBoss(args)
 			local bossargs = {
 				["name"] = encounterName, 
 				["zone"] = realZoneText, 
-				["difficulty"] = difficulty, 
 				["activityTime"] = activityTime, 
 				["playerList"] = playerList
 			}
@@ -1093,17 +1064,6 @@ end
 -- @param exportFormat The export format.
 function HeadCount:SetExportFormat(exportFormat) 
 	self.db.profile.exportFormat = exportFormat
-end
-
--- Gets the EQdkp difficulty status
--- @return boolean Returns true if EQdkp difficulty is enabled and false otherwise.
-function HeadCount:IsEQDKPDifficultyEnabled()
-	return self.db.profile.export["eqdkp"]["difficulty"]
-end
-
--- Sets/toggles the EQdkp difficulty
-function HeadCount:ToggleEQDKPDifficulty()
-	self.db.profile.export["eqdkp"]["difficulty"] = not self.db.profile.export["eqdkp"]["difficulty"]
 end
 
 -----------------------------------------------------
