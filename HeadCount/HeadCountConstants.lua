@@ -17,9 +17,6 @@ HeadCount.BOSS_TARGET = { }
 -- Localized battlegrounds
 HeadCount.BATTLEGROUNDS = { }
 
--- Instance difficulty
-HeadCount.INSTANCE_DIFFICULTY = { }
-
 -- Default level
 HeadCount.DEFAULT_LEVEL = 80
 
@@ -55,7 +52,6 @@ HeadCount.DEFAULT_COLOR_NO_ALPHA = "A335EE"
 
 -- Class colors
 HeadCount.CLASS_COLORS = {
-	["Death Knight"] = { r = 0.77, g = 0.12, b = 0.23, }, 
 	["Druid"] = { r = 1, g = 0.49, b = 0.04, }, 
 	["Hunter"] =  { r = 0.67, g = 0.83, b = 0.45 },
 	["Mage"] = { r = 0.41, g = 0.8, b = 0.94 },
@@ -92,12 +88,11 @@ function HeadCount:initializeConstants()
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Zul'Gurub"], { name = L["Zul'Gurub"], players = { 20 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Ruins of Ahn'Qiraj"], { name = L["Ruins of Ahn'Qiraj"], players = { 20 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Temple of Ahn'Qiraj"], { name = L["Ruins of Ahn'Qiraj"], players = { 40 } })
-	--HeadCount:addHashValue(HeadCount.INSTANCES, L["Onyxia's Lair"], { name = L["Onyxia's Lair"], players = { 40 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["Onyxia's Lair"], { name = L["Onyxia's Lair"], hasMultiDifficulty = true, players = { 10, 25 } })
-	
+	HeadCount:addHashValue(HeadCount.INSTANCES, L["Onyxia's Lair"], { name = L["Onyxia's Lair"], players = { 40 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Molten Core"], { name = L["Molten Core"], players = { 40 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Blackwing Lair"], { name = L["Blackwing Lair"], players = { 40 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Ahn'Qiraj"], { name = L["Temple of Ahn'Qiraj"], players = { 40 } })
+	HeadCount:addHashValue(HeadCount.INSTANCES, L["Naxxramas"], { name = L["Naxxramas"], players = { 40 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Karazhan"], { name = L["Karazhan"], players = { 10 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Zul'Aman"], { name = L["Zul'Aman"], players =  { 10 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Gruul's Lair"], { name = L["Gruul's Lair"], players = { 25 } })
@@ -107,18 +102,11 @@ function HeadCount:initializeConstants()
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Hyjal Summit"], { name = L["Battle for Mount Hyjal"], players = { 25 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Black Temple"], { name = L["Black Temple"], players = { 25 } })
 	HeadCount:addHashValue(HeadCount.INSTANCES, L["Sunwell Plateau"], { name = L["Sunwell Plateau"], players = { 25 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["Vault of Archavon"], { name = L["Vault of Archavon"], hasMultiDifficulty = true, players = { 10, 25 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["The Obsidian Sanctum"], { name = L["The Obsidian Sanctum"], hasMultiDifficulty = true, players = { 10, 25 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["Naxxramas"], { name = L["Naxxramas"], hasMultiDifficulty = true, players = { 10, 25 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["The Eye of Eternity"], { name = L["The Eye of Eternity"], hasMultiDifficulty = true, players = { 10, 25 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["Ulduar"], { name = L["Ulduar"], hasMultiDifficulty = true, players = { 10, 25 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["Trial of the Crusader"], { name = L["Trial of the Crusader"], hasMultiDifficulty = true, players = { 10, 25, 10, 25 } })
-	HeadCount:addHashValue(HeadCount.INSTANCES, L["Icecrown Citadel"], { name = L["Icecrown Citadel"], hasMultiDifficulty = true, players = { 10, 25 } })
 
 	-- Raid boss aliases
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Emperor Vek'lor"], L["Twin Emperors"])
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Emperor Vek'nilash"], L["Twin Emperors"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Baron Rivendare"], L["The Four Horsemen"])
+	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Highlord Mograine"], L["The Four Horsemen"])
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Lady Blaumeux"], L["The Four Horsemen"])
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Sir Zeliek"], L["The Four Horsemen"])
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Thane Korth'azz"], L["The Four Horsemen"])
@@ -135,54 +123,6 @@ function HeadCount:initializeConstants()
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Grand Warlock Alythess"], L["Eredar Twins"])
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Lady Sacrolash"], L["Eredar Twins"])
 	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Entropius"], L["M'uru"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Steelbreaker"], L["Assembly of Iron"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Runemaster Molgeim"], L["Assembly of Iron"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Stormcaller Brundir"], L["Assembly of Iron"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Leviathan Mk II"], L["Mimiron"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["VX-001"], L["Mimiron"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Aerial Command Unit"], L["Mimiron"])
-	--HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Gormok the Impaler"], L["Northrend Beasts"])
-	--HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Acidmaw"], L["Northrend Beasts"])
-	--HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Dreadscale"], L["Northrend Beasts"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Icehowl"], L["Northrend Beasts"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Eydis Darkbane"], L["Twin Val'kyr"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Fjola Lightbane"], L["Twin Val'kyr"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Tyrius Duskblade"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Kavina Grovesong"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Melador Valestrider"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Alyssia Moonstalker"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Noozle Whizzlestick"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Baelnor Lightbearer"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Velanaa"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Anthar Forgemender"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Brienna Nightfell"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Irieth Shadowstep"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Saamul"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Shaabad"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Serissa Grimdabbler"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Shocuul"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Gorgrim Shadowcleave"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Birana Stormhoof"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Erin Misthoof"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Ruj'kah"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Ginselle Blightslinger"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Liandra Suncaller"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Malithas Brightblade"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Caiphus the Stern"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Vivienne Blackwhisper"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Maz'dinah"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Thrakgar"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Broln Stouthorn"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Harkzog"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Narrhok Steelbreaker"], L["Faction Champions"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["High Overlord Saurfang"], L["Gunship Battle"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Muradin Bronzebeard"], L["Gunship Battle"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Prince Valanar"], L["Blood Princes"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Prince Taldaram"], L["Blood Princes"])
-	HeadCount:addHashValue(HeadCount.BOSS_ALIASES, L["Prince Keleseth"], L["Blood Princes"])
-	
-	-- Raid boss whitelist
-	HeadCount:addHashValue(HeadCount.BOSS_WHITELIST, L["Lady Deathwhisper"], true)
 
 	-- Raid boss blacklist
 	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Cairne Bloodhoof"], true)				-- Horde city bosses
@@ -240,23 +180,9 @@ function HeadCount:initializeConstants()
 	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Flame of Azzinoth"], true)
 	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Kalecgos"], true)						-- Sunwell Plateau
 	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Madrigosa"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Shadron"], true)						-- The Obsidian Sanctum
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Tenebron"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Vesperon"], true)
 	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Feugen"], true)							-- Naxxramas
 	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Stalagg"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Right Arm"], true)					-- Ulduar
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Left Arm"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Rubble"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Sanctum Sentry"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Elder Brightleaf"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Elder Ironbranch"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Elder Stonebark"], true)
 	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Cat"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Zhaagrym"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Gormok the Impaler"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Acidmaw"], true)
-	HeadCount:addHashValue(HeadCount.BOSS_BLACKLIST, L["Dreadscale"], true)	
 
 	-- Chat channels
 	HeadCount:addHashValue(HeadCount.CHAT_CHANNELS, L["Guild"], "GUILD")
@@ -266,49 +192,20 @@ function HeadCount:initializeConstants()
 	HeadCount:addHashValue(HeadCount.CHAT_CHANNELS, L["Say"], "SAY")
 	HeadCount:addHashValue(HeadCount.CHAT_CHANNELS, L["Yell"], "YELL")
 	
-	--  Instance difficulty
-	HeadCount:addListValue(HeadCount.INSTANCE_DIFFICULTY, _G["RAID_DIFFICULTY1"])
-	HeadCount:addListValue(HeadCount.INSTANCE_DIFFICULTY, _G["RAID_DIFFICULTY2"])
-	HeadCount:addListValue(HeadCount.INSTANCE_DIFFICULTY, _G["RAID_DIFFICULTY3"])
-	HeadCount:addListValue(HeadCount.INSTANCE_DIFFICULTY, _G["RAID_DIFFICULTY4"])
-	
 	-- Boss targets
 	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Cache of the Firelord"], L["Majordomo Executus"])
 	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Four Horsemen Chest"], L["The Four Horsemen"])
 	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Dust Covered Chest"], L["Chess Event"])
-	-- Wotlk
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Alexstrasza's Gift"], L["Malygos"])
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Cache of Living Stone"], L["Kologarn"])
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Cache of Innovation"], L["Mimiron"])
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Cache of Winter"], L["Hodir"])
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Cache of Storms"], L["Thorim"])
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Freya's Gift"], L["Freya"])
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Cache of the Dreamwalker"], L["Valithria Dreamwalker"])
-	HeadCount:addHashValue(HeadCount.BOSS_TARGET, L["Gunship Armory"], L["Gunship Battle"])
-	
-	-- Boss End Triggers
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["Freya"], L["boss.end.trigger.freya"])
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["Hodir"], L["boss.end.trigger.hodir"])
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["Thorim"], L["boss.end.trigger.thorim"])
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["High Overlord Saurfang"], L["boss.end.trigger.gunship.horde"])
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["Muradin Bronzebeard"], L["boss.end.trigger.gunship.alliance"])
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["Professor Putricide"], L["boss.end.trigger.putricide"])
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["Valithria Dreamwalker"], L["boss.end.trigger.dreamwalker"])
-	HeadCount:addHashValue(HeadCount.BOSS_END_TRIGGER, L["Sindragosa"], L["boss.end.trigger.sindragosa"])
 	
 	-- Battlegrounds/arenas
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Alterac Valley"], true)
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Arathi Basin"], true)
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Eye of the Storm"], true)
-	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Strand of the Ancients"], true)
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Warsong Gulch"], true)	
-	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Isle of Conquest"], true)
-	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Wintergrasp"], true)
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Blade's Edge Arena"], true)
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Dalaran Arena"], true)
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Nagrand Arena"], true)
 	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["Ruins of Lordaeron"], true)
-	HeadCount:addHashValue(HeadCount.BATTLEGROUNDS, L["The Ring of Valor"], true)
 end
 
 -- Add a hash table value
