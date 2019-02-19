@@ -53,17 +53,11 @@ function HeadCount:exportText(raid)
 	local exportString = ""   -- initialize as empty string	
 	
 	local zone = raid:getZone()
-    local difficulty = raid:getDifficulty()
-	local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]	
-
-	if (zone) then
-		if (difficultyString and HeadCount.INSTANCES[zone].hasMultiDifficulty) then
-			exportString = exportString .. zone .. " (" .. difficultyString .. ")\r\n"   
-		else
-			exportString = exportString .. zone .. "\r\n"   
-		end
-	end 
 	
+	if (zone) then
+		exportString = exportString .. zone .. "\r\n"   
+	end
+		
     local raidStartTime = raid:retrieveStartingTime()
     local raidEndTime = raid:retrieveEndingTime()		
 	exportString = exportString .. HeadCount:getDateTimeAsString(raidStartTime) .. " - " .. HeadCount:getDateTimeAsString(raidEndTime) .. "\r\n\r\n"
@@ -147,8 +141,6 @@ function HeadCount:exportXML(raid)
 	
 	-- <raid>
 	local zone = HeadCount:convertToXMLEntities(raid:getZone())
-	local difficulty = HeadCount:convertToXMLEntities(raid:getDifficulty())
-	local difficultyString = HeadCount.INSTANCE_DIFFICULTY[tonumber(difficulty)]	
 	local startTime = HeadCount:getDateTimeAsXMLString(raid:retrieveStartingTime())
 	local endTime = HeadCount:getDateTimeAsXMLString(raid:retrieveEndingTime())
 
@@ -163,12 +155,6 @@ function HeadCount:exportXML(raid)
 		exportString = exportString .. "\t<zone>" .. zone .. "</zone>\r\n"
 	else
 		exportString = exportString .. "\t<zone />\r\n"
-	end
-	
-	if (difficultyString and HeadCount.INSTANCES[raid:getZone()].hasMultiDifficulty) then
-		exportString = exportString .. "\t<difficulty>" .. difficultyString .. "</difficulty>\r\n"
-	else
-		exportString = exportString .. "\t<difficulty />\r\n"
 	end
 	
 	exportString = exportString .. "\t<start>" .. startTime .. "</start>\r\n"
@@ -279,8 +265,6 @@ function HeadCount:exportXML(raid)
 		for k,v in ipairs(bossList) do		
 			local bossName = HeadCount:convertToXMLEntities(v:getName())		 
 			local bossZone = HeadCount:convertToXMLEntities(v:getZone())
-			local bossDifficulty = HeadCount:convertToXMLEntities(v:getDifficulty())
-			local bossDifficultyString = HeadCount.INSTANCE_DIFFICULTY[tonumber(bossDifficulty)]
 			local bossTime = HeadCount:getDateTimeAsXMLString(v:getActivityTime())
 			local bossPlayerList = v:getPlayerList()
          
@@ -291,12 +275,6 @@ function HeadCount:exportXML(raid)
 				exportString = exportString .. "\t\t\t<zone>" .. bossZone .. "</zone>\r\n"
 			else
 				exportString = exportString .. "\t\t\t<zone />\r\n"
-			end
-			
-			if (bossDifficultyString) then
-				exportString = exportString .. "\t\t\t<difficulty>" .. bossDifficultyString .. "</difficulty>\r\n"
-			else
-				exportString = exportString .. "\t\t\t<difficulty />\r\n"
 			end
 			
 			exportString = exportString .. "\t\t\t<time>" .. bossTime .. "</time>\r\n"
@@ -429,14 +407,12 @@ function HeadCount:exportCSV(raid)
 	local exportString = ""   -- initialize as empty string
    
 	local zone = raid:getZone()
-    local difficulty = raid:getDifficulty()
-	local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
 	
     local raidStartTime = raid:retrieveStartingTime()
     local raidEndTime = raid:retrieveEndingTime()      
 
     -- output the field list
-    exportString = L["Zone"] .. "," .. L["Difficulty"] .. "," .. L["Date"] .. "," .. L["Length"] .. "," .. L["Player"] .. "," .. L["Raid list time"] .. "," .. L["Wait list time"] .. "," .. L["Offline time"] .. "," .. L["Loot"] .. "\r\n"
+    exportString = L["Zone"] .. "," .. L["Date"] .. "," .. L["Length"] .. "," .. L["Player"] .. "," .. L["Raid list time"] .. "," .. L["Wait list time"] .. "," .. L["Offline time"] .. "," .. L["Loot"] .. "\r\n"
    
     local orderedPlayerList = raid:retrieveOrderedPlayerList("Name", true, true, true, false, false, true)   
 	if ((# orderedPlayerList) > 0) then
@@ -449,13 +425,6 @@ function HeadCount:exportCSV(raid)
 			-- zone
 			if (zone) then
 				exportString = exportString .. "\"" .. zone .. "\","
-			else
-				exportString = exportString .. "\"" .. L["None"] .. "\","
-			end
-			
-			-- difficulty
-			if (difficultyString and HeadCount.INSTANCES[zone].hasMultiDifficulty) then 
-				exportString = exportString .. "\"" .. difficultyString .. "\","
 			else
 				exportString = exportString .. "\"" .. L["None"] .. "\","
 			end
@@ -515,14 +484,8 @@ function HeadCount:exportPhpBBItemStats(raid)
 	local exportString = ""	-- initialize as empty string
 	
 	local zone = raid:getZone()
-    local difficulty = raid:getDifficulty()
-	local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
 	if (zone) then
-		if (difficultyString and HeadCount.INSTANCES[zone].hasMultiDifficulty) then
-			exportString = exportString .. "[b][u]" .. zone .. " (" .. difficultyString .. ")[/u][/b]\r\n"   
-		else
-			exportString = exportString .. "[b][u]" .. zone .. "[/u][/b]\r\n"   
-		end
+		exportString = exportString .. "[b][u]" .. zone .. "[/u][/b]\r\n"   
 	end 
 		
     local raidStartTime = raid:retrieveStartingTime()
@@ -611,14 +574,8 @@ function HeadCount:exportPhpBB(raid)
 	local exportString = ""	-- initialize as empty string
 	
 	local zone = raid:getZone()
-    local difficulty = raid:getDifficulty()
-	local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
 	if (zone) then
-		if (difficultyString and HeadCount.INSTANCES[zone].hasMultiDifficulty) then
-			exportString = exportString .. "[b][u]" .. zone .. " (" .. difficultyString .. ")[/u][/b]\r\n"   
-		else
-			exportString = exportString .. "[b][u]" .. zone .. "[/u][/b]\r\n"   
-		end
+		exportString = exportString .. "[b][u]" .. zone .. "[/u][/b]\r\n"   
 	end 		
 		
     local raidStartTime = raid:retrieveStartingTime()
@@ -834,7 +791,6 @@ function HeadCount:exportEQdkp(raid)
 	exportString = exportString .. "<end>" .. HeadCount:getEQdkpDateTimeAsString(raidEndTime) .. "</end>"		
 	
 	local zone = raid:getZone()	-- raid zone
-	local difficulty = raid:getDifficulty()	-- raid difficulty
 	
 	local convertedZone = HeadCount:convertToEQdkpZoneName(zone, difficulty) 
 	if (convertedZone) then 
@@ -1065,36 +1021,6 @@ function HeadCount:getEQdkpDateTimeAsString(activityTime)
 	end
 	
 	return dateTimeString
-end
-
--- Converts the zone name to a zone name with a difficulty label if applicable.
--- @param zone The zone name.
--- @param difficulty The difficulty level
--- @return string Returns the converted zone name or the zone name if no conversion could be made
-function HeadCount:convertToEQdkpZoneName(zone, difficulty) 
-	local convertedZone = nil
-	local isDifficultyLabelEnabled = HeadCount:IsEQDKPDifficultyEnabled()
-	
-	if (zone) then
-		-- zone is valid
-		local isDifficultyLabelValid = (difficulty) and (HeadCount.INSTANCES[zone]) and (HeadCount.INSTANCES[zone].players[difficulty]) and (isDifficultyLabelEnabled)
-		if (isDifficultyLabelValid) then 
-			-- difficulty is valid
-			-- zone is in the supported instances list
-			-- zone is a heroic-enabled raid
-			-- EQdkp difficulty label is enabled
-			if (HeadCount.INSTANCES[zone].hasMultiDifficulty) then
-				convertedZone = zone .. " (" .. HeadCount.INSTANCES[zone].players[difficulty] .. ")"
-			else
-				convertedZone = zone
-			end
-		else
-			-- converted zone is the zone name
-			convertedZone = zone
-		end
-	end
-	
-	return convertedZone
 end
 
 -- Converts the class name to an EQdkp class name
