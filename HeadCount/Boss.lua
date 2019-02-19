@@ -16,7 +16,6 @@ HeadCount.Boss = AceOO.Class()
 
 HeadCount.Boss.prototype.name = nil
 HeadCount.Boss.prototype.zone = nil
-HeadCount.Boss.prototype.difficulty = nil
 HeadCount.Boss.prototype.activityTime = nil
 HeadCount.Boss.prototype.playerList = nil
 
@@ -28,7 +27,6 @@ function HeadCount.Boss.prototype:init(args)
 	
 	self.name = args["name"]
 	self.zone = args["zone"]
-	self.difficulty = args["difficulty"]
 	self.activityTime = args["activityTime"]
 	self.playerList = args["playerList"]
 end
@@ -56,12 +54,6 @@ end
 -- @return string Returns the boss zone.
 function HeadCount.Boss.prototype:getZone()
 	return self.zone
-end
-
--- Gets the zone difficulty
--- @return number Returns the zone difficulty
-function HeadCount.Boss.prototype:getDifficulty()
-	return self.difficulty
 end
 
 -- Gets the activity time.
