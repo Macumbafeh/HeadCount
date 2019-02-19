@@ -363,7 +363,6 @@ function HeadCount.RaidTracker.prototype:retrieveCurrentRaid(activityTime)
 			["bossList"] = { }, 
 			["lootList"] = { }, 
 			["timeList"] = { }, 
-			["difficulty"] = nil, 
 			["raidTime"] = 0, 
 			["lastActivityTime"] = activityTime, 
 			["zone"] = nil, 
@@ -432,45 +431,11 @@ function HeadCount.RaidTracker.prototype:processZoneChange()
 	self:processStatus(zone)
 	
 	if (self.isEnabled) then
-		-- check if the current zone is a valid raid instance zone
-		self:processAutomaticGroupSelection(zone)	-- process automatic group selection if applicable				
+		-- check if the current zone is a valid raid instance zone			
 		self:processRaidZone(zone)					-- process the zone
-		self:processDifficulty()					-- process the instance difficulty
 	end
 	
 	return zone
-end
-
--- Processes automatic group selection
--- Automatic group selection will only process if automatic group selection is enabled and the raid is supported
--- @param zone The zone name.
-function HeadCount.RaidTracker.prototype:processAutomaticGroupSelection(zone) 
-	local isAutomaticGroupSelectionEnabled = HeadCount:IsAutomaticGroupSelectionEnabled()
-	
-	if ((HeadCount:isRaidInstance()) and (self.isCurrentRaidActive) and (isAutomaticGroupSelectionEnabled)) then
-		local difficulty = HeadCount:determineDifficulty()		
-		local instance = HeadCount.INSTANCES[zone]
-		if ((instance) and (difficulty)) then 
-			-- zone is a support instance with known difficulty
-			
-			-- determine number of players
-			local numberOfPlayers = instance.players[difficulty] or HeadCount.NUMBER_OF_HEROIC_PLAYERS
-			
-			HeadCount:LogDebug(string.format(L["debug.raid.automaticgroupselection.change"], HeadCount.TITLE, HeadCount.VERSION, instance.name, numberOfPlayers))
-			
-			local numberOfRaidGroups = numberOfPlayers / HeadCount.NUMBER_OF_PARTY_PLAYERS
-			for i = 1, HeadCount.NUMBER_OF_PARTY_GROUPS do
-				-- 10 / 5 = 2,  20 / 5 = 4,  25 / 5 = 5, 40 / 5 = 8
-				local partyGroupString = string.format("%d", i)
-				
-				if (i <= numberOfRaidGroups) then 
-					HeadCount:SetRaidListGroups(partyGroupString, true)
-				else
-					HeadCount:SetWaitListGroups(partyGroupString, true) 
-				end
-			end
-		end
-	end
 end
 
 -- Processes the current raid zone.
@@ -487,25 +452,6 @@ function HeadCount.RaidTracker.prototype:processRaidZone(zone)
 				currentRaid:setZone(localizedZoneName)
 				self:saveRaidListWrapper()	-- save the raid list
 			end 
-		end
-	end
-end
-
--- Processes the difficulty
-function HeadCount.RaidTracker.prototype:processDifficulty()
-	if ((HeadCount:isRaidInstance()) and (self.isCurrentRaidActive)) then
-		-- player is in a raid instance and a tracked raid is active
-		local currentRaid = self:retrieveMostRecentRaid()
-		if (not currentRaid:getDifficulty()) then
-			-- current raid difficulty is not set
-			local difficulty = HeadCount:determineDifficulty()
-			if (difficulty) then
-				-- difficulty is returned
-				local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-				HeadCount:LogDebug(string.format(L["debug.raid.update.difficulty"], HeadCount.TITLE, HeadCount.VERSION, difficultyString))
-				currentRaid:setDifficulty(difficulty)
-				self:saveRaidListWrapper()	-- save the raid list
-			end
 		end
 	end
 end
@@ -536,8 +482,7 @@ function HeadCount.RaidTracker.prototype:processLootUpdate(message)
 			if (isBoss) then
 				-- loot source is valid and is a raid boss, process it for possible boss kill
 				local zone = GetRealZoneText()
-				local difficulty = HeadCount:determineDifficulty()
-				isBossKillProcessed = self:addBossKill(encounterName, zone, difficulty, activityTime)	
+				isBossKillProcessed = self:addBossKill(encounterName, zone, activityTime)	
 			end
 			
 			-- Process the loot
@@ -659,7 +604,7 @@ end
 -- @param zone The zone name.
 -- @param activityTime The boss kill time.
 -- @return boolean Returns true if a boss kill was processed and false otherwise
-function HeadCount.RaidTracker.prototype:addBossKill(encounterName, zone, difficulty, activityTime)	
+function HeadCount.RaidTracker.prototype:addBossKill(encounterName, zone, activityTime)	
 	local isProcessed = false
 	local currentRaid = self:retrieveMostRecentRaid()
 	if (not currentRaid:isBossPresent(encounterName)) then
@@ -673,7 +618,6 @@ function HeadCount.RaidTracker.prototype:addBossKill(encounterName, zone, diffic
 		local args = {
 			["name"] = encounterName, 
 			["zone"] = zone, 
-			["difficulty"] = difficulty, 
 			["activityTime"] = activityTime, 
 			["playerList"] = playerList
 		}
@@ -747,12 +691,7 @@ function HeadCount.RaidTracker.prototype:processAttendance(activityTime)
 				end
 			end
 
-			if (not currentRaid:getZone()) then
-				-- process automatic group selection if enabled and only if no zone is already defined for this raid
-				self:processAutomaticGroupSelection(zone)	
-			end
-			self:processRaidZone(zone)			-- Assign zone if current raid does not have a zone assigned					
-			self:processDifficulty()			-- Assign difficulty is current difficulty is not yet assigned
+			self:processRaidZone(zone)			-- Assign zone if current raid does not have a zone assigned
 			
 			-- Update each member in the raid group 
 			local numberOfRaidMembers = GetNumRaidMembers()
@@ -1066,7 +1005,6 @@ function HeadCount.RaidTracker.prototype:processBossTargets()
 	
 	-- the current zone
 	local zone = GetRealZoneText()
-	local difficulty = HeadCount:determineDifficulty()
 	local isBoss = false
 	local guid = nil
 	local bossName = nil
@@ -1097,7 +1035,7 @@ function HeadCount.RaidTracker.prototype:processBossTargets()
 			if (isBoss) then 
 				-- raid unit target exists, raid unit target is in combat, raid unit target is a boss mob for this zone
 				if (not bossTable[guid]) then
-					bossTable[guid] = { ["guid"] = guid, ["bossName"] = bossName, ["zone"] = zone, ["difficulty"] = difficulty, ["status"] = isDead, }		
+					bossTable[guid] = { ["guid"] = guid, ["bossName"] = bossName, ["zone"] = zone, ["status"] = isDead, }		
 					numberOfBosses = numberOfBosses + 1
 				end
 			end			
@@ -1259,9 +1197,8 @@ function HeadCount.RaidTracker.prototype:processBossDeath(guid, mob)
 					local activityTime = AceLibrary("HeadCountTime-1.0"):new({ ["utcDateTimeInSeconds"] = utcDateTimeInSeconds })
 					
 					local zone = GetRealZoneText()
-					local difficulty = HeadCount:determineDifficulty()
 					
-					local isBossKillProcessed = self:addBossKill(encounterName, zone, difficulty, activityTime)	-- add the boss kill
+					local isBossKillProcessed = self:addBossKill(encounterName, zone, activityTime)	-- add the boss kill
 					if (isBossKillProcessed) then
 						isBossKillEventProcessed = true
 					end
