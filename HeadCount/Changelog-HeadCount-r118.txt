@@ -1,0 +1,17 @@
+------------------------------------------------------------------------
+r118 | kagaro | 2010-10-21 13:10:52 +0000 (Thu, 21 Oct 2010) | 1 line
+Changed paths:
+   M /trunk/HeadCountFrames.lua
+   M /trunk/HeadCountFrames.xml
+
+Applies patch submitted by KJut
+------------------------------------------------------------------------
+r117 | jerryblade | 2010-03-31 19:15:55 +0000 (Wed, 31 Mar 2010) | 3 lines
+Changed paths:
+   M /trunk/locale/de_DE.lua
+   M /trunk/locale/en_US.lua
+
+HeadCount: 
+- Updated Dreamwalker Text Trigger
+- Added German Localizations (thanks Yoshimo!)
+------------------------------------------------------------------------
