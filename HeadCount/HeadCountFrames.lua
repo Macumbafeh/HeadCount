@@ -322,12 +322,6 @@ function HeadCount:HeadCountFrameRaidHistoryContentScroll_Update()
 
 				-- Display if the active raid text if it exists
 				local zone = raid:getZone()
-				local difficulty = raid:getDifficulty()
-				local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-				if ((zone) and HeadCount.INSTANCES[zone].hasMultiDifficulty and (difficultyString)) then
-					-- track heroic and above only for display
-					zone = zone .. " (" .. difficultyString .. ")"
-				end
 
 				-- Add active label to zone
 				if ((not raid:getIsFinalized()) and (raidTracker:getIsCurrentRaidActive())) then
@@ -1980,7 +1974,6 @@ function HeadCount:HeadCountFrameRaidHistoryContentTemplateExportButton_Enter(se
 
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(raidId)
-	local difficulty = selectedRaid:getDifficulty()
 
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -6, 0)
 	GameTooltip:ClearLines()
@@ -2007,7 +2000,6 @@ function HeadCount:HeadCountFrameRaidHistoryContentTemplateDeleteButton_Enter(se
 
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(raidId)
-	local difficulty = selectedRaid:getDifficulty()
 
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -6, 0)
 	GameTooltip:ClearLines()
@@ -2025,7 +2017,6 @@ function HeadCount:HeadCountFrameContentMembersButton_Enter(self)
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(HeadCountFrame.selectedRaidId)
 	local raidZone = selectedRaid:getZone()
-	local difficulty = selectedRaid:getDifficulty()
 
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -6, 0)
 	GameTooltip:ClearLines()
@@ -2034,11 +2025,6 @@ function HeadCount:HeadCountFrameContentMembersButton_Enter(self)
 
 	if (raidZone) then
 		GameTooltip:AddLine(raidZone, 1.0, 1.0, 1.0)
-	end
-
-	if (difficulty and HeadCount.INSTANCES[raidZone].hasMultiDifficulty) then
-		local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-		GameTooltip:AddLine(L["Difficulty"] .. ": " .. difficultyString, 1.0, 1.0, 1.0)
 	end
 
 	GameTooltip:AddLine(L["Number of members"] .. ": " .. selectedRaid:getNumberOfPlayers(), 1.0, 1.0, 1.0)
@@ -2051,7 +2037,6 @@ function HeadCount:HeadCountFrameContentWaitListButton_Enter(self)
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(HeadCountFrame.selectedRaidId)
 	local raidZone = selectedRaid:getZone()
-	local difficulty = selectedRaid:getDifficulty()
 
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -6, 0)
 	GameTooltip:ClearLines()
@@ -2060,11 +2045,6 @@ function HeadCount:HeadCountFrameContentWaitListButton_Enter(self)
 
 	if (raidZone) then
 		GameTooltip:AddLine(raidZone, 1.0, 1.0, 1.0)
-	end
-
-	if (difficulty and HeadCount.INSTANCES[raidZone].hasMultiDifficulty) then
-		local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-		GameTooltip:AddLine(L["Difficulty"] .. ": " .. difficultyString, 1.0, 1.0, 1.0)
 	end
 
 	GameTooltip:AddLine(L["Number of members"] .. ": " .. selectedRaid:getNumberOfWaitlistPlayers(), 1.0, 1.0, 1.0)
@@ -2078,7 +2058,6 @@ function HeadCount:HeadCountFrameContentBossButton_Enter(self)
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(HeadCountFrame.selectedRaidId)
 	local raidZone = selectedRaid:getZone()
-	local difficulty = selectedRaid:getDifficulty()
 
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -6, 0)
 	GameTooltip:ClearLines()
@@ -2086,11 +2065,6 @@ function HeadCount:HeadCountFrameContentBossButton_Enter(self)
 	GameTooltip:AddLine(HeadCount:getDateTimeAsString(selectedRaid:retrieveStartingTime()), 1.0, 1.0, 1.0)
 	if (raidZone) then
 		GameTooltip:AddLine(raidZone, 1.0, 1.0, 1.0)
-	end
-
-	if (difficulty and HeadCount.INSTANCES[raidZone].hasMultiDifficulty) then
-		local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-		GameTooltip:AddLine(L["Difficulty"] .. ": " .. difficultyString, 1.0, 1.0, 1.0)
 	end
 
 	GameTooltip:AddLine(L["Number of bosses"] .. ": " .. selectedRaid:getNumberOfBosses(), 1.0, 1.0, 1.0)
@@ -2103,7 +2077,6 @@ function HeadCount:HeadCountFrameContentLootButton_Enter(self)
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(HeadCountFrame.selectedRaidId)
 	local raidZone = selectedRaid:getZone()
-	local difficulty = selectedRaid:getDifficulty()
 
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -6, 0)
 	GameTooltip:ClearLines()
@@ -2111,11 +2084,6 @@ function HeadCount:HeadCountFrameContentLootButton_Enter(self)
 	GameTooltip:AddLine(HeadCount:getDateTimeAsString(selectedRaid:retrieveStartingTime()), 1.0, 1.0, 1.0)
 	if (raidZone) then
 		GameTooltip:AddLine(raidZone, 1.0, 1.0, 1.0)
-	end
-
-	if (difficulty and HeadCount.INSTANCES[raidZone].hasMultiDifficulty) then
-		local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-		GameTooltip:AddLine(L["Difficulty"] .. ": " .. difficultyString, 1.0, 1.0, 1.0)
 	end
 
 	GameTooltip:AddLine(L["Number of items"] .. ": " .. selectedRaid:numberOfLoots(), 1.0, 1.0, 1.0)
@@ -2133,7 +2101,6 @@ function HeadCount:HeadCountFrameContentMembersTemplateDeleteButton_Enter(self)
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(HeadCountFrame.selectedRaidId)
 	local raidZone = selectedRaid:getZone()
-	local difficulty = selectedRaid:getDifficulty()
 
 	local playerId = _G[self:GetParent():GetName() .. "Number"]:GetText()
 	local playerName = _G[self:GetParent():GetName() .. "Name"]:GetText()
@@ -2148,11 +2115,6 @@ function HeadCount:HeadCountFrameContentMembersTemplateDeleteButton_Enter(self)
 		GameTooltip:AddLine(raidZone, 1.0, 1.0, 1.0)
 	end
 
-	if (difficulty and HeadCount.INSTANCES[raidZone].hasMultiDifficulty) then
-		local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-		GameTooltip:AddLine(L["Difficulty"] .. ": " .. difficultyString, 1.0, 1.0, 1.0)
-	end
-
 	GameTooltip:Show()
 
 	_G[self:GetParent():GetName() .. "MouseOver"]:Show()
@@ -2163,7 +2125,6 @@ function HeadCount:HeadCountFrameContentSnapshotTemplateRemoveButton_Enter(self)
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(HeadCountFrame.selectedRaidId)
 	local raidZone = selectedRaid:getZone()
-	local difficulty = selectedRaid:getDifficulty()
 
 	local playerId = _G[self:GetParent():GetName() .. "Number"]:GetText()
 	local playerName = _G[self:GetParent():GetName() .. "Name"]:GetText()
@@ -2176,11 +2137,6 @@ function HeadCount:HeadCountFrameContentSnapshotTemplateRemoveButton_Enter(self)
 
 	if (raidZone) then
 		GameTooltip:AddLine(raidZone, 1.0, 1.0, 1.0)
-	end
-
-	if (difficulty and HeadCount.INSTANCES[raidZone].hasMultiDifficulty) then
-		local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-		GameTooltip:AddLine(L["Difficulty"] .. ": " .. difficultyString, 1.0, 1.0, 1.0)
 	end
 
 	if (HeadCountFrame.bossName) then
@@ -2221,7 +2177,6 @@ function HeadCount:HeadCountFrameContentBossTemplateDeleteButton_Enter(self)
 	local raidTracker = HeadCount:getRaidTracker()
 	local selectedRaid = raidTracker:getRaidById(HeadCountFrame.selectedRaidId)
 	local raidZone = selectedRaid:getZone()
-	local difficulty = selectedRaid:getDifficulty()
 
 	local bossId = _G[self:GetParent():GetName() .. "Number"]:GetText()
 	local bossName = _G[self:GetParent():GetName() .. "Name"]:GetText()
@@ -2234,11 +2189,6 @@ function HeadCount:HeadCountFrameContentBossTemplateDeleteButton_Enter(self)
 
 	if (raidZone) then
 		GameTooltip:AddLine(raidZone, 1.0, 1.0, 1.0)
-	end
-
-	if (difficulty and HeadCount.INSTANCES[raidZone].hasMultiDifficulty) then
-		local difficultyString = HeadCount.INSTANCE_DIFFICULTY[difficulty]
-		GameTooltip:AddLine(L["Difficulty"] .. ": " .. difficultyString, 1.0, 1.0, 1.0)
 	end
 
 	GameTooltip:Show()
@@ -2574,21 +2524,6 @@ function HeadCount:HeadCountFrameLootManagementLooterButton_CreateMenu(level, va
 	if (1 == level) then
 		dewdrop:AddLine('text', L["Looted by"] .. ":", 'isTitle', true)
 
-		if ((# playerList["Death Knight"]) > 0) then
-			dewdrop:AddLine('text', L["Death Knight"],
-							'textR', HeadCount.CLASS_COLORS["Death Knight"].r,
-							'textG', HeadCount.CLASS_COLORS["Death Knight"].g,
-							'textB', HeadCount.CLASS_COLORS["Death Knight"].b,
-							'hasArrow', true,
-							'value', "death knight",
-							'tooltipTitle', L["Death Knight"],
-							'tooltipText', L["Death Knight players"]
-							)
-		else
-			dewdrop:AddLine('text', L["Death Knight"],	'disabled', true, 'tooltipTitle', L["Death Knight"], 'tooltipText', L["Death Knight players"])
-		end
-
-
 		if ((# playerList["Druid"]) > 0) then
 			dewdrop:AddLine('text', L["Druid"],
 							'textR', HeadCount.CLASS_COLORS["Druid"].r,
@@ -2764,11 +2699,7 @@ function HeadCount:HeadCountFrameLootManagementLooterButton_CreateMenu(level, va
 						'tooltipText', L["Close the menu"]
 						)
 	elseif (level == 2) then
-		if (value == "death knight") then
-			for k,v in ipairs(playerList["Death Knight"]) do
-				HeadCount:HeadCountFrameLootManagementLooterButton_AddPlayerLine("Death Knight", v)
-			end
-		elseif (value == "druid") then
+		if (value == "druid") then
 			for k,v in ipairs(playerList["Druid"]) do
 				HeadCount:HeadCountFrameLootManagementLooterButton_AddPlayerLine("Druid", v)
 			end
@@ -2836,20 +2767,6 @@ function HeadCount:HeadCountFrameLootManagementPopupLooterButton_CreateMenu(leve
 	if (1 == level) then
 		dewdrop:AddLine('text', L["Looted by"] .. ":", 'isTitle', true)
 
-		if ((# playerList["Death Knight"]) > 0) then
-			dewdrop:AddLine('text', L["Death Knight"],
-							'textR', HeadCount.CLASS_COLORS["Death Knight"].r,
-							'textG', HeadCount.CLASS_COLORS["Death Knight"].g,
-							'textB', HeadCount.CLASS_COLORS["Death Knight"].b,
-							'hasArrow', true,
-							'value', "death knight",
-							'tooltipTitle', L["Death Knight"],
-							'tooltipText', L["Death Knight players"]
-							)
-		else
-			dewdrop:AddLine('text', L["Death Knight"],	'disabled', true, 'tooltipTitle', L["Death Knight"], 'tooltipText', L["Death Knight players"])
-		end
-
 		if ((# playerList["Druid"]) > 0) then
 			dewdrop:AddLine('text', L["Druid"],
 							'textR', HeadCount.CLASS_COLORS["Druid"].r,
@@ -3025,11 +2942,7 @@ function HeadCount:HeadCountFrameLootManagementPopupLooterButton_CreateMenu(leve
 						'tooltipText', L["Close the menu"]
 						)
 	elseif (level == 2) then
-		if (value == "death knight") then
-			for k,v in ipairs(playerList["Death Knight"]) do
-				HeadCount:HeadCountFrameLootManagementPopupLooterButton_AddPlayerLine("Death Knight", v)
-			end
-		elseif (value == "druid") then
+		if (value == "druid") then
 			for k,v in ipairs(playerList["Druid"]) do
 				HeadCount:HeadCountFrameLootManagementPopupLooterButton_AddPlayerLine("Druid", v)
 			end
