@@ -327,24 +327,6 @@ function HeadCount:isBattlegroundZone(zone)
 	return isBattleground
 end
 
--- Determines the difficulty level
--- 1 - 10 Player
--- 2 - 25 Player
--- 3 - 10 Player (Heroic)
--- 4 - 25 Player (Heroic)
--- @return number Returns the raid difficulty level or nil if not in a raid instance
-function HeadCount:determineDifficulty() 
-	local difficulty = nil
-	
-	local inInstance, instanceType = IsInInstance() 
-	
-	if (inInstance and instanceType == "raid") then 
-		difficulty = GetRaidDifficulty()
-	end
-	
-	return difficulty
-end
-
 -- Retrieves the item color based on item rarity
 -- @param The item quality (rarity)
 -- @return string Returns the item color
