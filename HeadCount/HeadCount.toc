@@ -1,4 +1,4 @@
-## Interface: 30300
+## Interface: 20400
 ## Title: HeadCount |cff3355ddv.1.7.5|r
 ## Name: HeadCount
 ## Author: seppyk, kagaro, JerryBlade
