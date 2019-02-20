@@ -385,14 +385,6 @@ local options = {
 					validate = exportFormats,					
 					order = 1, 
 				}, 	
-				["eqdkp"] = {
-					type = "group", 
-					name = L["console.command.export.eqdkp.name"], 
-					desc = L["console.command.export.eqdkp.description"], 
-					order = 2, 
-					args = {
-					}, 
-				}, 
 			}, 
 		}, 
 		reporting = {
