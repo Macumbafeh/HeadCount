@@ -18,7 +18,7 @@ HeadCount.BOSS_TARGET = { }
 HeadCount.BATTLEGROUNDS = { }
 
 -- Default level
-HeadCount.DEFAULT_LEVEL = 80
+HeadCount.DEFAULT_LEVEL = 70
 
 -- Raid instances
 HeadCount.INSTANCES = { }
