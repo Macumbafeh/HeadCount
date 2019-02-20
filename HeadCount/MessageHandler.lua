@@ -14,11 +14,12 @@ local HeadCount = HeadCount
 
 HeadCount.MessageHandler = AceOO.Class()
 
-local REGEX_WAITLIST = "^%s*wl"
+local REGEX_WAITLIST = "^%s*tl"
 --local REGEX_WAITLIST_COMMAND = "^%s*wl%s+(%a+)%s*$"
 local REGEX_WAITLIST_COMMAND = "^%s*wl%s+(%a+)%s*(.*)$"
-local REGEX_OUTGOING = "^%s*%[HeadCount%]"
-local MESSAGE_TYPE_WAITLIST = "wl"
+--local REGEX_OUTGOING = "^%s*%[HeadCount%]"
+local REGEX_OUTGOING = "^%s*%[TopLads%]"
+local MESSAGE_TYPE_WAITLIST = "tl"
 local COMMAND_WAITLIST_STATUS = "status"
 local COMMAND_WAITLIST_ADD = "add"
 local COMMAND_WAITLIST_REMOVE = "remove"
@@ -67,18 +68,18 @@ function HeadCount.MessageHandler.prototype:processIncomingMessage(raid, isWaitl
 					isUpdateRequired, messageList = self:processWaitlistRemoveMessage(raid, author)
 					isSupportedMessage = true	
 				end
-			elseif (COMMAND_WAITLIST_CONTACT == command) then 
-				isUpdateRequired, messageList = self:processWaitlistContactMessage(raid, author, waitlistNote)
-				isSupportedMessage = true
+			--elseif (COMMAND_WAITLIST_CONTACT == command) then 
+				--isUpdateRequired, messageList = self:processWaitlistContactMessage(raid, author, waitlistNote)
+				--isSupportedMessage = true
 			else
 				if (isWaitlistAcceptanceEnabled) then 
 					-- Only display invalid message during wait list acceptance to reduce spam
-					messageList = self:processWaitlistInvalidMessage(author)
+					--messageList = self:processWaitlistInvalidMessage(author)
 					isSupportedMessage = true	
 				end
 			end
 		else
-			messageList = self:processWaitlistMessage(isWaitlistAcceptanceEnabled, author)
+			--messageList = self:processWaitlistMessage(isWaitlistAcceptanceEnabled, author)
 			isSupportedMessage = true	
 		end
 	end
