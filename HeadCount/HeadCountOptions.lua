@@ -510,7 +510,7 @@ local defaultOptions = {
 	delay = 5,	-- default delay value of 5 seconds
 	isBattlegroundTrackingEnabled = false, 
 	dateFormat = L.dateFormatting[2], 
-	timezone = -5, -- "-5 GMT, Eastern Standard Time" 
+	timezone = +1, -- "+1 CET, Central European Time (Server Time)" 
 	isTimeFormatEnabled = true, 
 	isRaidListTimeEnabled = true, 
 	isWaitListTimeEnabled = false, 
@@ -520,7 +520,7 @@ local defaultOptions = {
 	broadcastChannel = channels["guild"], 
 	isLootBroadcastEnabled = false, 
 	isBossBroadcastEnabled = false,
-	exportFormat = exportFormats["EQdkp"], 
+	exportFormat = exportFormats["XML"], 
 	
 	-- export
 	isDebugEnabled = false, 
