@@ -9,7 +9,7 @@ HeadCount answers the following questions:
 - What loot dropped during a raid and who received it?
 - What boss kills occurred during a given raid and who was there for the kill?
 
-### This is a backwards ported release of version r118 to TBC 2.4.3
+### This is a backwards ported release of version r118 to TBC 2.4.3 with heroic raid support stripped from the code
 
 _Credit goes to Seppyk who was the original author of this addon and maintained it up to 3.3.5_
 
