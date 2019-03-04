@@ -14,16 +14,16 @@ local HeadCount = HeadCount
 
 HeadCount.MessageHandler = AceOO.Class()
 
-local REGEX_WAITLIST = "^%s*tl"
+local REGEX_WAITLIST = "^%s*wl"
 --local REGEX_WAITLIST_COMMAND = "^%s*wl%s+(%a+)%s*$"
 local REGEX_WAITLIST_COMMAND = "^%s*wl%s+(%a+)%s*(.*)$"
 --local REGEX_OUTGOING = "^%s*%[HeadCount%]"
 local REGEX_OUTGOING = "^%s*%[TopLads%]"
-local MESSAGE_TYPE_WAITLIST = "tl"
+local MESSAGE_TYPE_WAITLIST = "wl"
 local COMMAND_WAITLIST_STATUS = "status"
 local COMMAND_WAITLIST_ADD = "add"
 local COMMAND_WAITLIST_REMOVE = "remove"
-local COMMAND_WAITLIST_CONTACT = "contact"
+--local COMMAND_WAITLIST_CONTACT = "contact"
 
 function HeadCount.MessageHandler.prototype:init()
     self.class.super.prototype.init(self)
